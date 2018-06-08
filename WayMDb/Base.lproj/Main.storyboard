@@ -18,35 +18,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="TMDb Logo" translatesAutoresizingMaskIntoConstraints="NO" id="O3c-FO-gLN">
-                                <rect key="frame" x="109" y="109" width="156" height="138"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TMDb Logo" translatesAutoresizingMaskIntoConstraints="NO" id="O3c-FO-gLN">
+                                <rect key="frame" x="109" y="117" width="156" height="138"/>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" text="Search for Actors, Movies and TV Shows" textAlignment="center" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="irJ-CY-wHG">
-                                <rect key="frame" x="37" y="312" width="300" height="81"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Search for Actors, Movies and TV Shows" textAlignment="center" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="irJ-CY-wHG">
+                                <rect key="frame" x="37" y="293" width="300" height="81"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="81" id="1gi-TE-nsT"/>
+                                    <constraint firstAttribute="width" constant="300" id="Hjc-AT-aTJ"/>
+                                </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="28"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <searchBar contentMode="redraw" misplaced="YES" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="mdt-tS-HEU">
-                                <rect key="frame" x="17" y="414" width="340" height="56"/>
-                                <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="mdt-tS-HEU">
+                                <rect key="frame" x="17" y="395" width="340" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="340" id="e3R-I2-U2L"/>
+                                </constraints>
+                                <color key="barTintColor" red="0.0039215686269999999" green="0.82352941180000006" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" red="0.0039215686269999999" green="0.82352941180000006" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="irJ-CY-wHG" secondAttribute="trailing" constant="38" id="4Yb-Fc-po0"/>
-                            <constraint firstItem="mdt-tS-HEU" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Hkk-xO-M5Y"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mdt-tS-HEU" secondAttribute="bottom" constant="220" id="WrD-bc-dUz"/>
-                            <constraint firstItem="mdt-tS-HEU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="17" id="aST-Xq-DcH"/>
-                            <constraint firstItem="O3c-FO-gLN" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="gw2-8J-v9V"/>
-                            <constraint firstItem="mdt-tS-HEU" firstAttribute="top" secondItem="irJ-CY-wHG" secondAttribute="bottom" constant="5" id="kEh-Qr-q1e"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mdt-tS-HEU" secondAttribute="trailing" constant="18" id="lmA-lR-Swu"/>
-                            <constraint firstItem="irJ-CY-wHG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="37" id="thy-7o-zRI"/>
-                            <constraint firstItem="irJ-CY-wHG" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="tyS-nG-MoU"/>
-                            <constraint firstItem="irJ-CY-wHG" firstAttribute="top" secondItem="O3c-FO-gLN" secondAttribute="bottom" constant="80" id="w4b-ux-gpo"/>
-                            <constraint firstItem="O3c-FO-gLN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="102" id="yOr-Ac-bBC"/>
+                            <constraint firstItem="O3c-FO-gLN" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="D0r-Ug-CBD"/>
+                            <constraint firstItem="irJ-CY-wHG" firstAttribute="top" secondItem="O3c-FO-gLN" secondAttribute="bottom" constant="38" id="DpM-bR-rmy"/>
+                            <constraint firstItem="mdt-tS-HEU" firstAttribute="top" secondItem="irJ-CY-wHG" secondAttribute="bottom" constant="21" id="GGh-he-2NV"/>
+                            <constraint firstItem="mdt-tS-HEU" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="TWa-ft-OfN"/>
+                            <constraint firstItem="irJ-CY-wHG" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ezE-Eu-y2N"/>
+                            <constraint firstItem="O3c-FO-gLN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="97" id="ll8-7s-O1t"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
