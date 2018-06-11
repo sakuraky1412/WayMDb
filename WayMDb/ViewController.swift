@@ -10,30 +10,38 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let url = "http://api.themoviedb.org/3/discover/movie?api_key=71ab1b19293efe581c569c1c79d0f004"
-    var movie = [Show]()
-    var imdbdata: [String: Any] = [:]
-
-    // Actors
+    //TODO: Chang url according to search query
+    var url = "http://api.themoviedb.org/3/discover/movie?api_key=71ab1b19293efe581c569c1c79d0f004"
+    
+    // The JSON data gotten from the IMDb api
+    struct Data: Codable{
+        let results: [Show]
+        // Movie and TV Shows
+        struct Show: Codable {
+            // let label: String
+            let title: String?
+            let posterPath: String?
+            let voteAverage: Double?
+            let voteCount: Int?
+            let overview: String?
+            
+            private enum CodingKeys: String, CodingKey {
+                case title
+                case posterPath = "poster_path"
+                case voteAverage = "vote_average"
+                case voteCount = "vote_count"
+                case overview
+            }
+        }
+    }
+    
+    // TODO: Need to finish this
+    // Actors and Actresses
     struct People: Decodable {
-        let label: String
+        // let label: String
         let fullName: String
         let imageUrl: String
         let detail: String
-    }
-    
-    // Movie and TV Shows
-    struct Show: Codable {
-//        let label: String
-        let title: String
-        let posterPath: String
-        let voteAverage: Double
-        let voteCount: Int
-        let overview: String
-    }
-    
-    struct MovieList: Codable {
-        let results: [Show]
     }
     
     override func viewDidLoad() {
@@ -50,26 +58,6 @@ class ViewController: UIViewController {
     
     func parseJSON(){
         
-        
-//        //TODO: Change the url according to query
-//        guard let apiUrl = URL(string: url) else { return }
-//        URLSession.shared.dataTask(with: apiUrl) {(data, response, error) in
-//            guard let data = data else { return }
-//            do {
-//                let decoder = JSONDecoder()
-//                decoder.keyDecodingStrategy = .convertFromSnakeCase
-//                // ERROR: Cannot decode [String: Any]
-//                self.imdbdata = try decoder.decode([String: String].self, from: data)
-//                // TODO: Do the requirement if there is no data, such as
-//                // print(gitData.name ?? "Empty Name")
-//
-//                print(self.imdbdata)
-//
-//            } catch let err {
-//                print("Error", err)
-//            }
-//        }.resume()
-        
         guard let apiUrl = URL(string: url) else { return }
         URLSession.shared.dataTask(with: apiUrl) {(data, response, error) in
             
@@ -83,22 +71,13 @@ class ViewController: UIViewController {
                 return
             }
             
-            
-            guard let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) else {
-                print("Not containing JSON")
-                return
+            do {
+                let decoder = JSONDecoder()
+                let apiData = try decoder.decode(Data.self, from: content)
+                print(apiData.results)
+            } catch let err {
+                print("Error", err)
             }
-            
-            if let array = json as? MovieList {
-                self.movie = array.results
-            }
-            
-            print(self.movie)
-            
-//            DispatchQueue.main.async {
-//                self.tableView.reloadData()
-//            }
-            
         }.resume()
     }
     
