@@ -12,28 +12,6 @@ class TableViewController: UITableViewController {
     
     @IBOutlet weak var tblResults: UITableView!
     
-    // The JSON data gotten from the IMDb api
-    struct ShowList: Codable{
-        let results: [Show]
-        // Movie and TV Shows
-        struct Show: Codable {
-            // let label: String
-            let title: String?
-            let posterPath: String?
-            let voteAverage: Double?
-            let voteCount: Int?
-            let overview: String?
-            
-            private enum CodingKeys: String, CodingKey {
-                case title
-                case posterPath = "poster_path"
-                case voteAverage = "vote_average"
-                case voteCount = "vote_count"
-                case overview
-            }
-        }
-    }
-    
     //TODO: Chang url according to search query
     var url = "http://api.themoviedb.org/3/discover/movie?api_key=71ab1b19293efe581c569c1c79d0f004"
     
@@ -87,8 +65,6 @@ class TableViewController: UITableViewController {
 
 extension TableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        //        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ResultCell", for: indexPath) as! ResultCell
         
