@@ -15,6 +15,7 @@
 		59D2820B20C9B0AC00569631 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D2820920C9B0AC00569631 /* LaunchScreen.storyboard */; };
 		59D2821620C9B0AC00569631 /* WayMDbTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2821520C9B0AC00569631 /* WayMDbTests.swift */; };
 		59D2822120C9B0AD00569631 /* WayMDbUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2822020C9B0AD00569631 /* WayMDbUITests.swift */; };
+		59E2F8C520CEB2090091436F /* ViewTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E2F8C420CEB2090091436F /* ViewTableController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		59D2821C20C9B0AD00569631 /* WayMDbUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WayMDbUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D2822020C9B0AD00569631 /* WayMDbUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WayMDbUITests.swift; sourceTree = "<group>"; };
 		59D2822220C9B0AD00569631 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59E2F8C420CEB2090091436F /* ViewTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTableController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				59D2820920C9B0AC00569631 /* LaunchScreen.storyboard */,
 				59D2820C20C9B0AC00569631 /* Info.plist */,
 				59D2820420C9B0AC00569631 /* WayMDb.xcdatamodeld */,
+				59E2F8C420CEB2090091436F /* ViewTableController.swift */,
 			);
 			path = WayMDb;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				59D2820020C9B0AC00569631 /* ViewController.swift in Sources */,
 				59D2820620C9B0AC00569631 /* WayMDb.xcdatamodeld in Sources */,
 				59D281FE20C9B0AC00569631 /* AppDelegate.swift in Sources */,
+				59E2F8C520CEB2090091436F /* ViewTableController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
