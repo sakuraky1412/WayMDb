@@ -10,13 +10,10 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
-    //TODO: Chang url according to search query
-    var url = "http://api.themoviedb.org/3/discover/movie?api_key=71ab1b19293efe581c569c1c79d0f004"
-    
-    var showList = [Data.Show]()
+    @IBOutlet weak var tblResults: UITableView!
     
     // The JSON data gotten from the IMDb api
-    struct Data: Codable{
+    struct ShowList: Codable{
         let results: [Show]
         // Movie and TV Shows
         struct Show: Codable {
@@ -37,22 +34,19 @@ class TableViewController: UITableViewController {
         }
     }
     
-    // TODO: Need to finish this
-    // Actors and Actresses
-    struct People: Decodable {
-        // let label: String
-        let fullName: String
-        let imageUrl: String
-        let detail: String
-    }
+    //TODO: Chang url according to search query
+    var url = "http://api.themoviedb.org/3/discover/movie?api_key=71ab1b19293efe581c569c1c79d0f004"
+    
+    var showList = [ShowList.Show]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         parseJSON()
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-
+        // self.tableView.dataSource = self
+        // self.tableView.delegate = self
+        let nib = UINib.init(nibName: "ResultCell", bundle: nil)
+        self.tblResults.register(nib, forCellReuseIdentifier: "ResultCell")
     }
     
     override func didReceiveMemoryWarning() {
@@ -77,7 +71,7 @@ class TableViewController: UITableViewController {
             
             do {
                 let decoder = JSONDecoder()
-                let apiData = try decoder.decode(Data.self, from: content)
+                let apiData = try decoder.decode(ShowList.self, from: content)
                 print(apiData.results)
                 self.showList = apiData.results
                 DispatchQueue.main.async {
@@ -87,16 +81,19 @@ class TableViewController: UITableViewController {
                 print("Error", err)
             }
             }.resume()
+        
     }
-    
 }
 
 extension TableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell
+        //        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell
         
-        cell.textLabel?.text = self.showList[indexPath.row].title
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ResultCell", for: indexPath) as! ResultCell
+        
+        cell.lblType?.text = self.showList[indexPath.row].title
+        cell.lblTitleName?.text = self.showList[indexPath.row].title
         
         return cell
         
@@ -104,5 +101,9 @@ extension TableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.showList.count
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
 }
