@@ -12,6 +12,9 @@ class ResultCell: UITableViewCell {
     @IBOutlet weak var imgPoster: UIImageView!
     @IBOutlet weak var lblType: UILabel!
     @IBOutlet weak var lblTitleName: UILabel!
+    @IBOutlet weak var view: UIView!
+    @IBOutlet weak var starRating: CosmosView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -22,5 +25,4 @@ class ResultCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }

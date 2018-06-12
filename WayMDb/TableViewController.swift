@@ -50,7 +50,6 @@ class TableViewController: UITableViewController {
             do {
                 let decoder = JSONDecoder()
                 let apiData = try decoder.decode(ShowList.self, from: content)
-                print(apiData.results)
                 self.showList = apiData.results
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -64,12 +63,35 @@ class TableViewController: UITableViewController {
 }
 
 extension TableViewController {
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "ShowDetailSegue", sender: nil)
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ResultCell", for: indexPath) as! ResultCell
         
-        cell.lblType?.text = self.showList[indexPath.row].title
+        cell.layer.cornerRadius = 12.5
+        cell.layer.masksToBounds = true
+        
+        cell.lblType?.text = "Movie"
         cell.lblTitleName?.text = self.showList[indexPath.row].title
+        let ratingOfScaleTen = self.showList[indexPath.row].voteAverage
+        cell.starRating?.rating = ratingOfScaleTen!/2
+        
+        let posterUrl = URL(string: "https://image.tmdb.org/t/p/w342/" + self.showList[indexPath.row].posterPath!)
+        
+        DispatchQueue.global().async {
+            if let data = try? Data(contentsOf: posterUrl!) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        cell.imgPoster?.image = image
+                        cell.imgPoster?.contentMode = UIViewContentMode.scaleAspectFill
+                    }
+                }
+            }
+        }
         
         return cell
         
@@ -80,6 +102,6 @@ extension TableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 200
     }
 }
