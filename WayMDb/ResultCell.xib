@@ -49,7 +49,6 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="Poster" destination="Jge-g2-iup" id="Vje-tu-hwQ"/>
                 <outlet property="imgPoster" destination="Jge-g2-iup" id="4JI-bJ-uNn"/>
                 <outlet property="lblTitleName" destination="WQT-vO-Rdx" id="NDN-bM-QfT"/>
                 <outlet property="lblType" destination="Eox-40-QJK" id="Z1Z-KM-HQj"/>
