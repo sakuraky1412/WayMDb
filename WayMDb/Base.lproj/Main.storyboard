@@ -42,14 +42,6 @@
                                 <color key="barTintColor" red="0.0039215686269999999" green="0.82352941180000006" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ax-pa-g3R">
-                                <rect key="frame" x="142" y="472" width="90" height="46"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <state key="normal" title="Browse"/>
-                                <connections>
-                                    <segue destination="iKU-Tw-NK8" kind="show" id="X9y-wb-xEp"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0039215686269999999" green="0.82352941180000006" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -59,8 +51,6 @@
                             <constraint firstItem="mdt-tS-HEU" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="TWa-ft-OfN"/>
                             <constraint firstItem="irJ-CY-wHG" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ezE-Eu-y2N"/>
                             <constraint firstItem="O3c-FO-gLN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="97" id="ll8-7s-O1t"/>
-                            <constraint firstItem="2Ax-pa-g3R" firstAttribute="top" secondItem="mdt-tS-HEU" secondAttribute="bottom" constant="21" id="v2a-A9-xsj"/>
-                            <constraint firstItem="2Ax-pa-g3R" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="x1W-ZF-ErH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -71,14 +61,14 @@
         <!--Table View Controller-->
         <scene sceneID="77A-LT-cNR">
             <objects>
-                <tableViewController id="iKU-Tw-NK8" customClass="TableViewController" customModule="WayMDb" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="AvB-lk-W5p">
+                <tableViewController id="iKU-Tw-NK8" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="AvB-lk-W5p">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="A9K-1C-6Gj">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="A9K-1C-6Gj">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="A9K-1C-6Gj" id="94m-R0-wx5">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -87,13 +77,10 @@
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="iKU-Tw-NK8" id="6DP-j5-G9f"/>
-                            <outlet property="delegate" destination="iKU-Tw-NK8" id="sKx-a0-Om4"/>
+                            <outlet property="dataSource" destination="iKU-Tw-NK8" id="ITh-5p-sjf"/>
+                            <outlet property="delegate" destination="iKU-Tw-NK8" id="Nt3-2f-Ok5"/>
                         </connections>
                     </tableView>
-                    <connections>
-                        <outlet property="tblResults" destination="AvB-lk-W5p" id="0tD-tP-JN6"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xtc-YD-ncr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
