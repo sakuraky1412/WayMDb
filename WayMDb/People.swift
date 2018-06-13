@@ -8,11 +8,8 @@
 
 import Foundation
 
-// TODO: Need to finish this
 // Actors and Actresses
 struct People: Decodable {
-    // let label: String
-    let fullName: String
-    let imageUrl: String
-    let detail: String
+    let biography: String?
+    let gender: Int?
 }

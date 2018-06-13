@@ -15,7 +15,7 @@ class TableViewController: UITableViewController {
     //TODO: Chang url according to search query
     var url = "http://api.themoviedb.org/3/discover/movie?api_key=71ab1b19293efe581c569c1c79d0f004"
     
-    var showList = [ShowList.Show]()
+    var showList = [SearchResults.Media]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +49,8 @@ class TableViewController: UITableViewController {
             
             do {
                 let decoder = JSONDecoder()
-                let apiData = try decoder.decode(ShowList.self, from: content)
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let apiData = try decoder.decode(SearchResults.self, from: content)
                 self.showList = apiData.results
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -64,6 +65,29 @@ class TableViewController: UITableViewController {
 
 extension TableViewController {
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowDetailSegue" {
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                let controller = segue.destination as! DetailViewController
+                //Type
+                if let mediaType = self.showList[indexPath.row].mediaType {
+                    controller.type = getMediaTypeShown(mediaType: mediaType)
+                } else {
+                    controller.type = "MOVIE"
+                }
+                // Title
+                controller.showTitle = self.showList[indexPath.row].title
+                // Rating
+                controller.rating = self.showList[indexPath.row].voteAverage!/2
+                // Poster
+                controller.posterUrl = URL(string: "https://image.tmdb.org/t/p/w342/" + self.showList[indexPath.row].posterPath!)
+                // Detail
+                controller.detail = self.showList[indexPath.row].overview
+                
+            }
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "ShowDetailSegue", sender: nil)
     }
@@ -72,22 +96,26 @@ extension TableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ResultCell", for: indexPath) as! ResultCell
         
-        cell.layer.cornerRadius = 12.5
+        cell.layer.cornerRadius = 20
         cell.layer.masksToBounds = true
+        cell.layer.borderWidth = CGFloat(10)
+        cell.layer.borderColor = tableView.backgroundColor?.cgColor
         
-        cell.lblType?.text = "Movie"
-        cell.lblTitleName?.text = self.showList[indexPath.row].title
-        let ratingOfScaleTen = self.showList[indexPath.row].voteAverage
-        cell.starRating?.rating = ratingOfScaleTen!/2
+        if let mediaType = self.showList[indexPath.row].mediaType {
+            cell.lblType?.text = getMediaTypeShown(mediaType: mediaType)
+        } else {
+            cell.lblType?.text = "MOVIE"
+        }
+        
+        cell.lblTitle?.text = self.showList[indexPath.row].title
+        cell.starRating?.rating = self.showList[indexPath.row].voteAverage!/2
         
         let posterUrl = URL(string: "https://image.tmdb.org/t/p/w342/" + self.showList[indexPath.row].posterPath!)
-        
         DispatchQueue.global().async {
             if let data = try? Data(contentsOf: posterUrl!) {
                 if let image = UIImage(data: data) {
                     DispatchQueue.main.async {
                         cell.imgPoster?.image = image
-                        cell.imgPoster?.contentMode = UIViewContentMode.scaleAspectFill
                     }
                 }
             }
@@ -103,5 +131,20 @@ extension TableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
+    }
+    
+    func getMediaTypeShown(mediaType: String) -> String {
+        let mediaTypeShown: String
+        switch mediaType {
+        case "movie":
+            mediaTypeShown = "MOVIE"
+        case "tv":
+            mediaTypeShown = "TV SHOW"
+        case "person":
+            mediaTypeShown = "THE ACTOR"
+        default:
+            mediaTypeShown = "UNKNOWN MEDIA"
+        }
+        return mediaTypeShown
     }
 }

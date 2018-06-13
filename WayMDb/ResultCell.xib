@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,24 +19,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="240" height="179.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jge-g2-iup">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jge-g2-iup">
                         <rect key="frame" x="0.0" y="0.0" width="240" height="180"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title/Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WQT-vO-Rdx">
-                        <rect key="frame" x="56.5" y="73.5" width="127" height="33"/>
+                        <rect key="frame" x="57" y="74" width="127" height="33"/>
                         <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="24"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eox-40-QJK">
-                        <rect key="frame" x="93.5" y="40.5" width="53.5" height="33"/>
-                        <color key="backgroundColor" red="0.82352941176470584" green="0.47843137254901963" blue="0.45882352941176469" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="24"/>
-                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hUl-EU-9HF" customClass="CosmosView" customModule="WayMDb" customModuleProvider="target">
                         <rect key="frame" x="60" y="114" width="120" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="120" id="gso-Cn-oQg"/>
+                        </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
                                 <integer key="value" value="2"/>
@@ -43,13 +40,22 @@
                             <userDefinedRuntimeAttribute type="boolean" keyPath="updateOnTouch" value="NO"/>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TYPE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eox-40-QJK">
+                        <rect key="frame" x="92" y="33" width="56" height="33"/>
+                        <color key="backgroundColor" red="0.82352941176470584" green="0.47843137254901963" blue="0.45882352941176469" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="24"/>
+                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstItem="hUl-EU-9HF" firstAttribute="centerX" secondItem="Jge-g2-iup" secondAttribute="centerX" id="2Zp-wD-OAa"/>
-                    <constraint firstItem="hUl-EU-9HF" firstAttribute="centerY" secondItem="Jge-g2-iup" secondAttribute="centerY" constant="34.5" id="9bA-Di-Ucu"/>
-                    <constraint firstItem="Eox-40-QJK" firstAttribute="centerY" secondItem="Jge-g2-iup" secondAttribute="centerY" constant="-33" id="Ahk-as-pTw"/>
+                    <constraint firstItem="Eox-40-QJK" firstAttribute="centerY" secondItem="Jge-g2-iup" secondAttribute="centerY" constant="-40.5" id="Ahk-as-pTw"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="hUl-EU-9HF" secondAttribute="bottom" constant="35" id="GIs-0K-BdB"/>
+                    <constraint firstItem="hUl-EU-9HF" firstAttribute="centerX" secondItem="Jge-g2-iup" secondAttribute="centerX" id="OG4-tx-IHb"/>
                     <constraint firstItem="WQT-vO-Rdx" firstAttribute="centerX" secondItem="Jge-g2-iup" secondAttribute="centerX" id="V4C-g0-9cB"/>
                     <constraint firstItem="Eox-40-QJK" firstAttribute="centerX" secondItem="Jge-g2-iup" secondAttribute="centerX" id="VIL-vc-CTc"/>
+                    <constraint firstItem="hUl-EU-9HF" firstAttribute="top" secondItem="WQT-vO-Rdx" secondAttribute="bottom" constant="7" id="WHG-lM-0AX"/>
                     <constraint firstItem="Jge-g2-iup" firstAttribute="leading" secondItem="Osf-43-1bQ" secondAttribute="leading" id="WuL-iV-xg3"/>
                     <constraint firstItem="WQT-vO-Rdx" firstAttribute="centerY" secondItem="Jge-g2-iup" secondAttribute="centerY" id="dvV-XQ-Hyh"/>
                     <constraint firstAttribute="trailing" secondItem="Jge-g2-iup" secondAttribute="trailing" id="nEC-Ol-5Wl"/>
@@ -62,7 +68,7 @@
             <variation key="heightClass=regular-widthClass=regular" preservesSuperviewLayoutMargins="YES"/>
             <connections>
                 <outlet property="imgPoster" destination="Jge-g2-iup" id="4JI-bJ-uNn"/>
-                <outlet property="lblTitleName" destination="WQT-vO-Rdx" id="NDN-bM-QfT"/>
+                <outlet property="lblTitle" destination="WQT-vO-Rdx" id="NDN-bM-QfT"/>
                 <outlet property="lblType" destination="Eox-40-QJK" id="Z1Z-KM-HQj"/>
                 <outlet property="starRating" destination="hUl-EU-9HF" id="K3d-Lh-9Ey"/>
                 <outlet property="view" destination="Osf-43-1bQ" id="rlE-sI-1xy"/>

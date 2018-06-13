@@ -11,7 +11,7 @@ import UIKit
 class ResultCell: UITableViewCell {
     @IBOutlet weak var imgPoster: UIImageView!
     @IBOutlet weak var lblType: UILabel!
-    @IBOutlet weak var lblTitleName: UILabel!
+    @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var view: UIView!
     @IBOutlet weak var starRating: CosmosView!
     
