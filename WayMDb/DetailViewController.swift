@@ -37,7 +37,12 @@ class DetailViewController: UIViewController {
             }
         }
         txtDetail.text = detail
-        starRating.rating = rating!
+        
+        if rating != nil {
+            starRating.rating = rating!
+        } else {
+            starRating.rating = 0
+        }
     }
 
     override func didReceiveMemoryWarning() {
