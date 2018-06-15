@@ -10,19 +10,42 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    // let viewController: UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TableViewController") as UIViewController
-
-   // let searchController = UISearchController(searchResultsController: tableViewController,: TableViewController)
+    var showList = [SearchResults.Media]()
+    let tableViewController = TableViewController()
+    let searchController = UISearchController(searchResultsController: TableViewController())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         addGradientToView(view: self.view)
+        // Setup the Search Controller
+        searchController.searchResultsUpdater = self
+        // searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    // TODO: implement scope according to wenderlich tutorial
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        let url = "https://api.themoviedb.org/3/search/multi?api_key=71ab1b19293efe581c569c1c79d0f004&query=" + searchText
+        tableViewController.parseJSON(url: url)
+        print(showList)
+        tableViewController.tableView.reloadData()
     }
     
     func addGradientToView(view: UIView)
@@ -43,5 +66,12 @@ class ViewController: UIViewController {
         
     }
     
+}
+
+extension ViewController: UISearchResultsUpdating {
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
 }
 

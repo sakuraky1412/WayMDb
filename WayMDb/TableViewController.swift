@@ -19,11 +19,13 @@ class TableViewController: UITableViewController {
     var url = "http://api.themoviedb.org/3/discover/movie?api_key=71ab1b19293efe581c569c1c79d0f004"
     var showList = [SearchResults.Media]()
     var image: UIImage = #imageLiteral(resourceName: "Default Poster")
+    var completionHandlers: [(UIImage) -> ()] = []
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        parseJSON()
+        parseJSON(url: url)
         // self.tableView.dataSource = self
         // self.tableView.delegate = self
         let nib = UINib.init(nibName: "ResultCell", bundle: nil)
@@ -35,34 +37,29 @@ class TableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func parseJSON(){
-        
-        guard let apiUrl = URL(string: url) else { return }
-        URLSession.shared.dataTask(with: apiUrl) {(data, response, error) in
-            
+    func parseJSON(url: String) {
+        let apiUrl = URL(string: url)
+        URLSession.shared.dataTask(with: apiUrl!) {(data, response, error) in
             guard error == nil else {
                 print("returning error")
                 return
             }
-            
             guard let content = data else {
                 print("not returning data")
                 return
             }
-            
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let apiData = try decoder.decode(SearchResults.self, from: content)
                 self.showList = apiData.results
-//                DispatchQueue.main.async {
-//                    self.tableView.reloadData()
-//                }
+                DispatchQueue.main.async { [weak self] in
+                    self?.tableView.reloadData()
+                }
             } catch let err {
                 print("Error", err)
             }
             }.resume()
-        
     }
 }
 
@@ -139,8 +136,11 @@ extension TableViewController {
         return 200
     }
     
+    
     // async method to load image from url
-    func loadAsyncFrom(url: String, placeholder: UIImage) {
+    func loadAsyncFrom(url: String, placeholder: UIImage, completion: @escaping (UIImage) -> ()) {
+        completionHandlers.append(completion)
+        
         // store url as key string
         let imageURL = url as NSString
         // return cashed image if not nil
