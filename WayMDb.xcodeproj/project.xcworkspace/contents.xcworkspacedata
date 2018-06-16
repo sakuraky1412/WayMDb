@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:WayMDb.xcodeproj">
+      location = "group:../../../Downloads/WayMDb/WayMDb/CosmosDistrib.swift">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>
