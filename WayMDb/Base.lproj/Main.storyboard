@@ -35,48 +35,44 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TMDb Logo" translatesAutoresizingMaskIntoConstraints="NO" id="O3c-FO-gLN">
-                                <rect key="frame" x="109" y="161" width="156" height="138"/>
+                                <rect key="frame" x="110" y="148" width="156" height="138"/>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Search for Actors, Movies and TV Shows" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="irJ-CY-wHG">
-                                <rect key="frame" x="37" y="337" width="300" height="81"/>
+                                <rect key="frame" x="37" y="324" width="300" height="81"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="81" id="1gi-TE-nsT"/>
-                                    <constraint firstAttribute="width" constant="300" id="Hjc-AT-aTJ"/>
+                                    <constraint firstAttribute="height" constant="81" id="rb4-hz-1l9"/>
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="28"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="mdt-tS-HEU">
-                                <rect key="frame" x="17" y="439" width="340" height="56"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="340" id="e3R-I2-U2L"/>
-                                </constraints>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="barTintColor" red="0.0039215686269999999" green="0.82352941180000006" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ax-pa-g3R">
-                                <rect key="frame" x="142" y="516" width="90" height="46"/>
+                                <rect key="frame" x="142" y="496" width="90" height="46"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <state key="normal" title="Browse"/>
                                 <connections>
                                     <segue destination="iKU-Tw-NK8" kind="show" id="Ea3-kn-xVi"/>
                                 </connections>
                             </button>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="kyY-ip-HAi">
+                                <rect key="frame" x="37" y="430" width="300" height="56"/>
+                                <color key="barTintColor" red="0.0039215686269999999" green="0.82352941180000006" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" red="0.0039215686269999999" green="0.82352941180000006" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="O3c-FO-gLN" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="D0r-Ug-CBD"/>
-                            <constraint firstItem="irJ-CY-wHG" firstAttribute="top" secondItem="O3c-FO-gLN" secondAttribute="bottom" constant="38" id="DpM-bR-rmy"/>
-                            <constraint firstItem="mdt-tS-HEU" firstAttribute="top" secondItem="irJ-CY-wHG" secondAttribute="bottom" constant="21" id="GGh-he-2NV"/>
-                            <constraint firstItem="mdt-tS-HEU" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="TWa-ft-OfN"/>
-                            <constraint firstItem="irJ-CY-wHG" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ezE-Eu-y2N"/>
-                            <constraint firstItem="O3c-FO-gLN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="97" id="ll8-7s-O1t"/>
-                            <constraint firstItem="2Ax-pa-g3R" firstAttribute="top" secondItem="mdt-tS-HEU" secondAttribute="bottom" constant="21" id="v2a-A9-xsj"/>
-                            <constraint firstItem="2Ax-pa-g3R" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="x1W-ZF-ErH"/>
+                            <constraint firstItem="O3c-FO-gLN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="84" id="D00-xs-9SN"/>
+                            <constraint firstItem="kyY-ip-HAi" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="F8M-Oe-CYl"/>
+                            <constraint firstItem="irJ-CY-wHG" firstAttribute="top" secondItem="O3c-FO-gLN" secondAttribute="bottom" constant="38" id="cRJ-lQ-qvx"/>
+                            <constraint firstItem="2Ax-pa-g3R" firstAttribute="top" secondItem="irJ-CY-wHG" secondAttribute="bottom" constant="91" id="ekQ-Yi-lHc"/>
+                            <constraint firstItem="irJ-CY-wHG" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="fLG-B7-cLB"/>
+                            <constraint firstItem="2Ax-pa-g3R" firstAttribute="top" secondItem="kyY-ip-HAi" secondAttribute="bottom" constant="10" id="me5-qX-lwZ"/>
+                            <constraint firstItem="2Ax-pa-g3R" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="nrb-b5-paP"/>
+                            <constraint firstItem="kyY-ip-HAi" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="37" id="uCt-Bo-Dhv"/>
+                            <constraint firstItem="irJ-CY-wHG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="37" id="uYG-rW-OCT"/>
+                            <constraint firstItem="O3c-FO-gLN" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="zzU-Jp-qiM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -147,7 +143,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" semanticContentAttribute="forceLeftToRight" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Am5-Q7-z7o">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="235"/>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RgV-5p-C94">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" pagingEnabled="YES" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RgV-5p-C94">
                                 <rect key="frame" x="0.0" y="243" width="375" height="370"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
