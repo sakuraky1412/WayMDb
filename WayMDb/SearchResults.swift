@@ -23,6 +23,7 @@ struct SearchResults: Codable{
         let name: String?
         // Actors and Actresses
         let profilePath: String?
+        // id to get biography
         let id: Int?
     }
 }
