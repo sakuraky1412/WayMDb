@@ -168,7 +168,8 @@ extension TableViewController {
                 // Detail
                 if (media.mediaType == "person"){
                     controller.detail = detail
-                    // print(controller.detail)
+                    print(controller.detail)
+
                 }
                else {
                     controller.detail = media.overview

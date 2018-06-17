@@ -21,7 +21,7 @@
 		59F10CB420D00EFD00634C14 /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F10CAF20D00EFD00634C14 /* SearchResults.swift */; };
 		59F10CB820D0582500634C14 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F10CB720D0582500634C14 /* DetailViewController.swift */; };
 		59FE272320D1A17900E96EF4 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE272220D1A17900E96EF4 /* People.swift */; };
-		CB90E4FA20D58FB50098C89D /* CosmosDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB90E4F920D58FB50098C89D /* CosmosDistrib.swift */; };
+		CB4794AB20D49A2F00C5F9AB /* CosmosDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4794AA20D49A2E00C5F9AB /* CosmosDistrib.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +62,7 @@
 		59F10CAF20D00EFD00634C14 /* SearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
 		59F10CB720D0582500634C14 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		59FE272220D1A17900E96EF4 /* People.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
-		CB90E4F920D58FB50098C89D /* CosmosDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CosmosDistrib.swift; sourceTree = "<group>"; };
+		CB4794AA20D49A2E00C5F9AB /* CosmosDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CosmosDistrib.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,11 +113,11 @@
 		59D281FC20C9B0AC00569631 /* WayMDb */ = {
 			isa = PBXGroup;
 			children = (
-				CB90E4F920D58FB50098C89D /* CosmosDistrib.swift */,
 				59D281FD20C9B0AC00569631 /* AppDelegate.swift */,
 				59D281FF20C9B0AC00569631 /* ViewController.swift */,
 				59D2820120C9B0AC00569631 /* Main.storyboard */,
 				59F10CB720D0582500634C14 /* DetailViewController.swift */,
+				CB4794AA20D49A2E00C5F9AB /* CosmosDistrib.swift */,
 				59D2820720C9B0AC00569631 /* Assets.xcassets */,
 				59D2820920C9B0AC00569631 /* LaunchScreen.storyboard */,
 				59D2820C20C9B0AC00569631 /* Info.plist */,
@@ -284,9 +284,9 @@
 				59F10CB820D0582500634C14 /* DetailViewController.swift in Sources */,
 				59D2820020C9B0AC00569631 /* ViewController.swift in Sources */,
 				59D2820620C9B0AC00569631 /* WayMDb.xcdatamodeld in Sources */,
+				CB4794AB20D49A2F00C5F9AB /* CosmosDistrib.swift in Sources */,
 				59F10CB220D00EFD00634C14 /* ResultCell.swift in Sources */,
 				59FE272320D1A17900E96EF4 /* People.swift in Sources */,
-				CB90E4FA20D58FB50098C89D /* CosmosDistrib.swift in Sources */,
 				59D281FE20C9B0AC00569631 /* AppDelegate.swift in Sources */,
 				59E2F8C520CEB2090091436F /* TableViewController.swift in Sources */,
 				59F10CB420D00EFD00634C14 /* SearchResults.swift in Sources */,
