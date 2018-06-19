@@ -16,53 +16,35 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var starRating: CosmosView!
     
     var type: String?
+    var typeColor: UIColor?
     var showTitle: String?
-    var posterUrl: URL?
+    var poster: UIImage?
     var detail: String?
     var rating: Double?
-    var defaultImage: UIImage?
-    var typeColor: UIColor?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         lblType.text = type
         lblType.backgroundColor = typeColor
-        lblType.frame.size = lblType.intrinsicContentSize
-
+        // lblType.frame.size = lblType.intrinsicContentSize
         lblTitle.text = showTitle
-        
-        if posterUrl != nil {
-            DispatchQueue.global().async {
-                if let data = try? Data(contentsOf: self.posterUrl!), let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.imgPoster.image = image
-                    }
-                } else {
-                    self.imgPoster.image = self.defaultImage
-                }
-            }
-        } else {
-            self.imgPoster.image = defaultImage
-        }
-        
         txtDetail.text = detail
+        txtDetail.scrollRangeToVisible(NSRange(location:0, length:0))
         
-        if rating != nil {
-            starRating.isHidden = false
+        if type != "THE ACTOR" {
             starRating.rating = rating!
         } else {
             starRating.isHidden = true
-            starRating.rating = 0
         }
+        
+        imgPoster.image = poster
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
     /*
      // MARK: - Navigation
      

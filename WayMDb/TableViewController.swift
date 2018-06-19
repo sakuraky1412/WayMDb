@@ -14,6 +14,7 @@ class TableViewController: UITableViewController {
     //TODO: Chang url according to search query
     let movieTypeString = "MOVIE"
     let browseUrl = "http://api.themoviedb.org/3/discover/movie?api_key=71ab1b19293efe581c569c1c79d0f004"
+    let partialPosterUrl = "https://image.tmdb.org/t/p/w342/"
     let searchController = UISearchController(searchResultsController: nil)
     let green = UIColor(red: 66/255, green: 244/255, blue: 128/255, alpha: 1)
     let blue = UIColor(red: 59/255, green: 197/255, blue: 247/255, alpha: 1)
@@ -22,9 +23,8 @@ class TableViewController: UITableViewController {
     var defaultImage: UIImage = #imageLiteral(resourceName: "Default Poster")
     var browseShowList = [SearchResults.Media]()
     var searchShowList = [SearchResults.Media]()
-    var detail = ""
+    var detail = "Detail"
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -36,8 +36,8 @@ class TableViewController: UITableViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
-        parseJSON(url: browseUrl, completion: {(list: [SearchResults.Media]?, error: Error?) -> Void in
-            self.browseShowList = list!})
+        parseJSON(url: browseUrl, person: false, completion1: {(list: [SearchResults.Media]?, error: Error?) -> Void in
+            self.browseShowList = list!}, completion2: {(detail: String?, error: Error?) -> Void in self.detail = detail!} )
         
         // self.tableView.dataSource = self
         // self.tableView.delegate = self
@@ -59,12 +59,7 @@ class TableViewController: UITableViewController {
         return searchController.isActive && !searchBarIsEmpty()
     }
     
-    //    // TODO: implement scope according to wenderlich tutorial
-    //    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-    //
-    //    }
-    
-    func parseJSON(url: String, completion: @escaping ([SearchResults.Media]?, Error?) -> Void) {
+    func parseJSON(url: String, person: Bool, completion1: @escaping ([SearchResults.Media]?, Error?) -> Void, completion2: @escaping (String?, Error?) -> Void) {
         let apiUrl = URL(string: url)
         URLSession.shared.dataTask(with: apiUrl!) {(data, response, error) in
             guard error == nil else {
@@ -78,13 +73,26 @@ class TableViewController: UITableViewController {
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let apiData = try decoder.decode(SearchResults.self, from: content)
-                completion(apiData.results, nil)
-                DispatchQueue.main.async { [weak self] in
-                    self?.tableView.reloadData()
+                if !person{
+                    let apiData = try decoder.decode(SearchResults.self, from: content)
+                    DispatchQueue.main.async { [weak self] in
+                        completion1(apiData.results, nil)
+                        self?.tableView.reloadData()
+                        if apiData.results.count != 0 {
+                            let indexPath = IndexPath(row: 0, section: 0)
+                            self?.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+                        }
+                    }
                 }
+                else {
+                    let apiData = try decoder.decode(People.self, from: content)
+                    DispatchQueue.main.async { 
+                        completion2(apiData.biography, nil)
+                    }
+                }
+                
             } catch let error {
-                completion(nil, error)
+                completion1(nil, error)
             }
             }.resume()
     }
@@ -92,70 +100,80 @@ class TableViewController: UITableViewController {
 
 extension TableViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        let searchUrl = "https://api.themoviedb.org/3/search/multi?api_key=71ab1b19293efe581c569c1c79d0f004&query=" + searchBar.text!
-        parseJSON(url: searchUrl, completion: {(list: [SearchResults.Media]?, error: Error?) -> Void in
-            self.searchShowList = list!})
+        let trimmed = searchBar.text?.replacingOccurrences(of: " ", with: "")
+        let searchUrl = "https://api.themoviedb.org/3/search/multi?api_key=71ab1b19293efe581c569c1c79d0f004&query=" + trimmed!
+        parseJSON(url: searchUrl, person: false, completion1: {(list: [SearchResults.Media]?, error: Error?) -> Void in
+            self.searchShowList = list!}, completion2: {(detail: String?, error: Error?) -> Void in self.detail = detail!})
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+            let indexPath = IndexPath(row: 0, section: 0)
+            self?.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        }
     }
 }
 
-//extension TableViewController: UISearchResultsUpdating {
-//    // MARK: - UISearchResultsUpdating Delegate
-//    func updateSearchResults(for searchController: UISearchController) {
-//        filterContentForSearchText(searchController.searchBar.text!)
-//    }
-//}
-
 extension TableViewController {
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowDetailSegue" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 let controller = segue.destination as! DetailViewController
+                
                 let media: SearchResults.Media
                 if isFiltering() {
                     media = searchShowList[indexPath.row]
                 } else {
                     media = browseShowList[indexPath.row]
                 }
+                var imagePath = "nil"
+
+                func setDetailPageFields(type: String, typeColor: UIColor, title: String, imageUrl: String, defaultImage: UIImage) {
+                    controller.type = type
+                    controller.typeColor = typeColor
+                    controller.showTitle = title
+                    if imagePath != "nil" {
+                        loadAsyncFrom(url: partialPosterUrl + imageUrl, placeholder: defaultImage, completion: {(imageToPresent: UIImage?, error: Error?) -> Void in
+                            controller.imgPoster.image = imageToPresent!})
+                    } else {
+                        controller.poster = defaultImage
+                    }
+                }
                 
-                // Type
+                // Detail
+                if media.mediaType == "person"{
+                    let personUrl = "https://api.themoviedb.org/3/person/\(media.id ?? 0)?api_key=71ab1b19293efe581c569c1c79d0f004"
+                    parseJSON(url: personUrl, person: true, completion1: {(list: [SearchResults.Media]?, error: Error?) -> Void in
+                        self.searchShowList = list!}, completion2: {(detail: String?, error: Error?) -> Void in controller.txtDetail.text = detail!})
+                } else {
+                    controller.detail = media.overview!
+                }
+                
                 if let mediaType = media.mediaType {
                     switch mediaType {
                     case "movie":
-                        controller.type = movieTypeString
-                        // Title
-                        controller.showTitle = media.title
-                        controller.defaultImage = #imageLiteral(resourceName: "Default Poster")
-                        controller.typeColor = red
                         if media.posterPath != nil {
-                            controller.posterUrl = URL(string: "https://image.tmdb.org/t/p/w342/" + media.posterPath!)
+                            imagePath = media.posterPath!
                         }
+                        setDetailPageFields(type: movieTypeString, typeColor: red, title: media.title!, imageUrl: imagePath, defaultImage: #imageLiteral(resourceName: "Default Poster"))
                     case "tv":
-                        controller.type = "TV SHOW"
-                        controller.showTitle = media.name
-                        controller.defaultImage = #imageLiteral(resourceName: "Default Poster")
-                        controller.typeColor = green
                         if media.posterPath != nil {
-                            controller.posterUrl = URL(string: "https://image.tmdb.org/t/p/w342/" + media.posterPath!)
+                            imagePath = media.posterPath!
                         }
+                        setDetailPageFields(type: "TV SHOW", typeColor: green, title: media.name!, imageUrl: imagePath, defaultImage: #imageLiteral(resourceName: "Default Poster"))
                     case "person":
-                        controller.type = "THE ACTOR"
-                        controller.showTitle = media.name
-                        controller.defaultImage = #imageLiteral(resourceName: "Default Profile")
-                        controller.typeColor = blue
                         if media.profilePath != nil {
-                            controller.posterUrl = URL(string: "https://image.tmdb.org/t/p/w342/" + media.profilePath!)
+                            imagePath = media.profilePath!
                         }
+                        setDetailPageFields(type: "THE ACTOR", typeColor: blue, title: media.name!, imageUrl: imagePath, defaultImage: #imageLiteral(resourceName: "Default Profile"))
                     default:
-                        controller.type = "UNKNOWN MEDIA"
+                        setDetailPageFields(type: "UNKNOWN MEDIA", typeColor: UIColor.black, title: "", imageUrl: imagePath, defaultImage: #imageLiteral(resourceName: "Default Poster"))
                     }
                 } else {
-                    controller.type = movieTypeString
-                    controller.showTitle = media.title
-                    controller.typeColor = red
                     if media.posterPath != nil {
-                        controller.posterUrl = URL(string: "https://image.tmdb.org/t/p/w342/" + media.posterPath!)
+                        imagePath = media.posterPath!
                     }
+                    setDetailPageFields(type: movieTypeString, typeColor: red, title: media.title!, imageUrl: imagePath, defaultImage: #imageLiteral(resourceName: "Default Poster"))
                 }
                 
                 // Rating
@@ -165,15 +183,6 @@ extension TableViewController {
                     controller.rating = 0
                 }
                 
-                // Detail
-                if (media.mediaType == "person"){
-                    controller.detail = detail
-                    // print(controller.detail)
-
-                }
-               else {
-                    controller.detail = media.overview
-                }
             }
         }
     }
@@ -207,7 +216,7 @@ extension TableViewController {
                 typeColor = red
                 // Poster
                 if media.posterPath != nil {
-                    let posterUrl = "https://image.tmdb.org/t/p/w342/" + media.posterPath!
+                    let posterUrl = partialPosterUrl + media.posterPath!
                     loadAsyncFrom(url: posterUrl, placeholder: #imageLiteral(resourceName: "Default Poster"), completion: {(imageToPresent: UIImage?, error: Error?) -> Void in
                         cell.imgPoster?.image = imageToPresent!})
                 } else {
@@ -219,7 +228,7 @@ extension TableViewController {
                 defaultImage = #imageLiteral(resourceName: "Default Poster")
                 typeColor = green
                 if media.posterPath != nil {
-                    let posterUrl = "https://image.tmdb.org/t/p/w342/" + media.posterPath!
+                    let posterUrl = partialPosterUrl + media.posterPath!
                     loadAsyncFrom(url: posterUrl, placeholder: #imageLiteral(resourceName: "Default Poster"), completion: {(imageToPresent: UIImage?, error: Error?) -> Void in
                         cell.imgPoster?.image = imageToPresent!})
                 } else {
@@ -231,7 +240,7 @@ extension TableViewController {
                 defaultImage = #imageLiteral(resourceName: "Default Profile")
                 typeColor = blue
                 if media.profilePath != nil {
-                    let posterUrl = "https://image.tmdb.org/t/p/w342/" + media.profilePath!
+                    let posterUrl = partialPosterUrl + media.profilePath!
                     loadAsyncFrom(url: posterUrl, placeholder: #imageLiteral(resourceName: "Default Poster"), completion: {(imageToPresent: UIImage?, error: Error?) -> Void in
                         cell.imgPoster?.image = imageToPresent!})
                 } else {
@@ -245,7 +254,7 @@ extension TableViewController {
             cell.lblTitle?.text = media.title
             typeColor = red
             if media.posterPath != nil {
-                let posterUrl = "https://image.tmdb.org/t/p/w342/" + media.posterPath!
+                let posterUrl = partialPosterUrl + media.posterPath!
                 loadAsyncFrom(url: posterUrl, placeholder: #imageLiteral(resourceName: "Default Poster"), completion: {(imageToPresent: UIImage?, error: Error?) -> Void in
                     cell.imgPoster?.image = imageToPresent!})
             } else {
@@ -263,38 +272,22 @@ extension TableViewController {
             cell.starRating?.rating = 0
             cell.starRating.isHidden = true
         }
-        
-        if media.mediaType == "person"{
-            let personUrl = "https://api.themoviedb.org/3/person/\(media.id ?? 0)?api_key=71ab1b19293efe581c569c1c79d0f004"
-            let apiUrl = URL(string: personUrl)
-            URLSession.shared.dataTask(with: apiUrl!) {(data, response, error) in
-                guard error == nil else {
-                    print("returning error")
-                    return
-                }
-                guard let content = data else {
-                    print("not returning data")
-                    return
-                }
-                do {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let apiData = try decoder.decode(People.self, from: content)
-                    self.detail = apiData.biography!
-                } catch let error {
-                    print(error)
-                }
-                }.resume()
-        }
-        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering() {
-            return searchShowList.count
+        let numOfRows = isFiltering() ? searchShowList.count : browseShowList.count
+        
+        if numOfRows == 0 {
+            let noDataLabel: UILabel     = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+            noDataLabel.text          = "No Results Found"
+            noDataLabel.textColor     = UIColor.black
+            noDataLabel.textAlignment = .center
+            tableView.backgroundView  = noDataLabel
+            tableView.separatorStyle  = .none
         }
-        return browseShowList.count
+        
+        return numOfRows
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
