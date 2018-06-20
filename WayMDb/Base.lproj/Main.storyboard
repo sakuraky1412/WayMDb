@@ -52,7 +52,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <state key="normal" title="Browse"/>
                                 <connections>
-                                    <segue destination="iKU-Tw-NK8" kind="show" id="Ea3-kn-xVi"/>
+                                    <segue destination="iKU-Tw-NK8" kind="show" identifier="SearchSegue" id="Ea3-kn-xVi"/>
                                 </connections>
                             </button>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="kyY-ip-HAi">
@@ -78,6 +78,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="lVS-9P-PHd"/>
                     <connections>
+                        <outlet property="SearchBar" destination="kyY-ip-HAi" id="U0p-Nc-tlm"/>
                         <outlet property="searchDisplayController" destination="TWo-3H-FJ8" id="vsr-qI-5sW"/>
                     </connections>
                 </viewController>

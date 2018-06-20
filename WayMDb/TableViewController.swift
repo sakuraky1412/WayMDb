@@ -24,7 +24,22 @@ class TableViewController: UITableViewController {
     var browseShowList = [SearchResults.Media]()
     var searchShowList = [SearchResults.Media]()
     var detail = "Detail"
+    var initialSearch = false
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if #available(iOS 11.0, *) {
+            navigationItem.hidesSearchBarWhenScrolling = false
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if #available(iOS 11.0, *) {
+            navigationItem.hidesSearchBarWhenScrolling = true
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -35,14 +50,19 @@ class TableViewController: UITableViewController {
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        
-        parseJSON(url: browseUrl, person: false, completion1: {(list: [SearchResults.Media]?, error: Error?) -> Void in
-            self.browseShowList = list!}, completion2: {(detail: String?, error: Error?) -> Void in self.detail = detail!} )
+        if initialSearch{
+            searchBarSearchButtonClicked(searchController.searchBar)
+            initialSearch = false
+        } else {
+            parseJSON(url: browseUrl, person: false, completion1: {(list: [SearchResults.Media]?, error: Error?) -> Void in self.browseShowList = list!}, completion2: {(detail: String?, error: Error?) -> Void in self.detail = detail!} )
+        }
         
         // self.tableView.dataSource = self
         // self.tableView.delegate = self
         let nib = UINib.init(nibName: "ResultCell", bundle: nil)
         self.tblResults.register(nib, forCellReuseIdentifier: "ResultCell")
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -102,8 +122,11 @@ extension TableViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let trimmed = searchBar.text?.replacingOccurrences(of: " ", with: "")
         let searchUrl = "https://api.themoviedb.org/3/search/multi?api_key=71ab1b19293efe581c569c1c79d0f004&query=" + trimmed!
-        parseJSON(url: searchUrl, person: false, completion1: {(list: [SearchResults.Media]?, error: Error?) -> Void in
-            self.searchShowList = list!}, completion2: {(detail: String?, error: Error?) -> Void in self.detail = detail!})
+        if initialSearch {
+            parseJSON(url: searchUrl, person: false, completion1: {(list: [SearchResults.Media]?, error: Error?) -> Void in self.browseShowList = list!}, completion2: {(detail: String?, error: Error?) -> Void in self.detail = detail!})
+        } else {
+        parseJSON(url: searchUrl, person: false, completion1: {(list: [SearchResults.Media]?, error: Error?) -> Void in self.searchShowList = list!}, completion2: {(detail: String?, error: Error?) -> Void in self.detail = detail!})
+        }
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         DispatchQueue.main.async { [weak self] in
@@ -121,7 +144,7 @@ extension TableViewController {
                 let controller = segue.destination as! DetailViewController
                 
                 let media: SearchResults.Media
-                if isFiltering() {
+                if isFiltering() || initialSearch {
                     media = searchShowList[indexPath.row]
                 } else {
                     media = browseShowList[indexPath.row]

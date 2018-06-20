@@ -9,11 +9,14 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
+    @IBOutlet weak var SearchBar: UISearchBar!
+    var searchButtonClicked = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         addGradientToView(view: self.view)
+        SearchBar.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,7 +53,21 @@ class ViewController: UIViewController {
         //gradientLayer.startPoint = CGPoint(x: 0, y: 0)
         //gradientLayer.endPoint = CGPoint(x: 0.6, y: 1)
         gradientLayer.locations = [-0.8, 0.5]
-        
+    }
+}
+
+extension ViewController: UISearchBarDelegate {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SearchSegue" && searchButtonClicked {
+            searchButtonClicked = false
+            let controller = segue.destination as! TableViewController
+            controller.searchController.searchBar.text = SearchBar.text
+            controller.initialSearch = true
+        }
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchButtonClicked = true
+        self.performSegue(withIdentifier: "SearchSegue", sender: nil)
+    }
 }
